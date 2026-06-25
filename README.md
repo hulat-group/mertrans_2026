@@ -52,20 +52,27 @@ This layer relied on glossary-based and lexical-resource support to identify dif
 Although lexical support can be useful from an accessibility-oriented perspective, RUN2 obtained a slightly lower official SARI score than RUN1, suggesting that lexical substitutions require careful calibration in reference-based evaluation settings.
 
 - **RUN3: RigoChat-Based Baseline**
-RUN3 was implemented as a linear generate–evaluate–regenerate baseline.
+  RUN3 was implemented as a linear generate–evaluate–regenerate baseline.
 
-It used RigoChat-7B-v2 with prompt engineering, post-processing and LoRA-based adaptation. The system generated an Easy-to-Read-oriented output, evaluated it using internal quality criteria and attempted regeneration when the output did not satisfy the expected constraints.
+  It used RigoChat-7B-v2 with prompt engineering, post-processing and LoRA-based adaptation. The system generated an Easy-to-Read-oriented output, evaluated it using internal quality criteria and attempted regeneration when the output did not satisfy the expected constraints.
 
 ---
 
 ## 🤖 Models
 The submitted systems used the following models and frameworks:
 
-Gemini 2.5 Flash
-
+- **Gemini 2.5 Flash**
 Used in the multi-agent workflow for conservative Plain Language generation and Easy-to-Read-oriented generation.
 
-Official model documentation:
+Official model: [Gemini 2.5 Flash](https://ai.google.dev/gemini-api/docs/models/gemini-2.5-flash?hl=es-419)
+
+- **RigoChat-7B-v2**
+Used both as one of the generators in the multi-agent workflow and as the main model in the RUN3 baseline.
+
+RigoChat-7B-v2 is a Spanish-oriented language model based on Qwen2.5-7B-Instruct and adapted for Spanish queries.
+
+Official model: [RigoChat-7B-v2](https://huggingface.co/IIC/RigoChat-7b-v2)  
+
 
 ## 📖 Citation
 
