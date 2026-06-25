@@ -1,6 +1,6 @@
 # 🧠 HULAT-UC3M @MER-TRANS 2026 Shared Task
 
-[![MER-TRANS](https://img.shields.io/badge/MER-TRANS-2026-blue)](https://lastus-taln-upf.github.io/mertrans-iberlef-2026/#overview)
+[![MER-TRANS 2026](https://img.shields.io/badge/MER--TRANS-2026-blue)](https://lastus-taln-upf.github.io/mertrans-iberlef-2026/#overview)
 [![Python](https://img.shields.io/badge/Python-3.10%2B-blue)]()
 
 ---
