@@ -41,20 +41,20 @@ On-demand simplification of a single input text. Reads a `.txt` file with the fo
 ### `run_parallel_evaluation.py`
 Batch evaluation script with checkpointing and optional trace logging, used to evaluate the system on different corpus beyond the official MER-TRANS test. Including the Spanish Constitution in Easy-to-Read format and an exploratory clinical-text corpus used in separate internal testing. 
 
+> Note: no dataset files are distributed in this repository, only the code that references them. Some of the resources used for calibration (e.g. the Spanish Constitution in Easy-to-Read format)publicly available and documented in Appendix A of the paper.
+
 ### `run_trial_evaluation.py`
 Batch evaluation script that runs the pipeline over the official MER-TRANS trial set.
-
-> Note: no dataset files are distributed in this repository, only the code that references them. Some of the resources used for calibration (e.g. the Spanish Constitution in Easy-to-Read format)publicly available and documented in Appendix A of the paper.
 
 ---
 
 ## 🧩 What is *not* included
 
 - The `src/graph.py`, `src/signals.py` and `src/all_nodes`modules.
-- Prompt templates used by the generators and the merger-editor.
+- Prompt templates.
 - ECA routing rules, quality-signal thresholds, and retry logic.
-- The HULAT-UC3M glossary and lexical-resource files.
 - Any dataset files.
+- The HULAT-UC3M glossary and lexical-resource files.
 
 ---
 
