@@ -1,4 +1,21 @@
-## 📊 Official Results
+# 📊 Results
+
+This folder contains the outputs and evaluation metrics of our runs for the **MER-TRANS-2026 Shared Task**.  
+It is divided into two main components: **metrics** (quantitative evaluation) and **official results**.
+
+---
+
+## 📐 Metrics
+
+We report evaluation results across several metrics:  
+
+- **Simplification**: SARI, BLEU-Orig  
+- **Meaning Preservation**: BERTScore, BLEU-Gold  
+- **Similarity to References**: BERTScore, BLEU-Gold
+
+---
+
+## 📝 Official Results Summary
 
 The official MER-TRANS Spanish results for the three HULAT2-UC3M configurations:
 
