@@ -1,4 +1,3 @@
-#runs
 # 💻 Source Code
 
 This folder contains a selection of **non-core orchestration scripts** used during the development and execution of the HULAT2-UC3M MER-TRANS 2026 submissions.
