@@ -35,11 +35,11 @@ def compute_external_metrics(original, output, reference):
     sari_val = bleu_val = bs_val = 0.0
     if not output or not reference: return sari_val, bleu_val, bs_val
     
-    # 1. SARI (Estandardizado en src.signals)
+    # SARI 
     try: sari_val = sari(original, output, [reference])
     except: pass
     
-    # 2. BLEU (Normalizado 0-1)
+    # BLEU 
     try:
         from sacrebleu.metrics import BLEU
         bleu_val = BLEU(effective_order=True).sentence_score(output, [reference]).score / 100
@@ -49,7 +49,7 @@ def compute_external_metrics(original, output, reference):
             bleu_val = evaluate.load('bleu').compute(predictions=[output], references=[reference])['bleu']
         except: pass
         
-    # 3. BERTScore (Normalizado 0-1)
+    # BERTScore
     try:
         P, R, F1 = bert_score_func([output], [reference], model_type='bert-base-multilingual-cased', lang='es')
         bs_val = F1.mean().item()
@@ -58,7 +58,7 @@ def compute_external_metrics(original, output, reference):
     return sari_val, bleu_val, bs_val
 
 def main():
-    # 1. Cargar configuración
+    # Cargar configuración
     load_dotenv()
     api_key = os.getenv("GOOGLE_API_KEY")
     if not api_key:
@@ -68,7 +68,7 @@ def main():
     print("\n  INICIANDO EVALUACION DEL TRIAL iDEM")
     print("-" * 50)
 
-    # 2. Preparar modelos
+    # Preparar modelos
     print("  Conectando con Gemini 2.5 Flash...")
     gemini_llm = ChatGoogleGenerativeAI(model='gemini-2.5-flash', api_key=api_key, temperature=0.1)
     
@@ -101,11 +101,10 @@ def main():
         print(f"[FAIL] Error cargando RigoChat: {e}")
         return
 
-    # 3. Inicializar Sistema y Métricas
+    # Inicializar Sistema y Métricas
     app, glossary, lexical_resources = setup_system(gemini_llm, rigochat_llm)
     
     print("[METRIC] Cargando evaluadores de métricas...")
-    # sari_scorer = evaluate.load('sari', trust_remote_code=True) # Usamos versión de la profe
     bleu_scorer = evaluate.load('bleu')
     try:
         print("   -> Cargando BERTScore (esto puede tardar un poco)...")
@@ -114,7 +113,7 @@ def main():
         print(f"   [WARNING] Warning BERTScore: {e}")
         bertscore_scorer = None
 
-    # 4. Cargar Trial CSV
+    # Cargar Trial CSV
     trial_data = []
     csv_path = 'data/es_trial_document.csv'
     try:
@@ -142,11 +141,9 @@ def main():
         # Calcular Métricas Externas (SARI, BLEU, BERTScore)
         sari_cur, bleu_cur, bs_cur = compute_external_metrics(original, output, reference)
 
-        # Calcular Legibilidad (Fernandez-Huerta estandarizada 0-1)
+        # Calcular Legibilidad (Fernandez-Huerta estandarizada)
         leg_norm = fernandez_huerta(output) if output else 0.0
 
-        # El resumen detallado ya lo imprime run_simplification()
-        # Aquí solo añadimos las métricas específicas de evaluación externa para el log
         print(f"[METRIC] Métricas Externas: SARI={sari_cur:.3f} | BLEU={bleu_cur:.3f} | BERTScore={bs_cur:.3f}")
         print("-"*65 + "\n")
 
@@ -163,12 +160,12 @@ def main():
             'output': output
         })
         
-        # Limpieza profunda tras cada ejemplo
+        # Limpieza
         del state
         del output
         gc.collect()
 
-    # 5. Mostrar Resultados
+    # Mostrar Resultados
     df = pd.DataFrame(results)
     
     print("\n\n" + "="*85)
@@ -187,7 +184,7 @@ def main():
     print(f"Legibilidad media: {df['legibilidad'].mean():.3f}")
     print("="*70)
 
-    # Guardar a CSV para que el usuario pueda descargarlo si quiere
+    # Guardar a CSV 
     df.to_csv("resultados_trial_completo.csv", index=False)
     print("\nOK Resultados guardados en 'resultados_trial_completo.csv'")
 

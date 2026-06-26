@@ -55,7 +55,7 @@ def load_corpus(name, max_n=None, start_id=None, end_id=None):
         for row in csv.DictReader(f):
             if not row.get('original_text','').strip(): continue
             
-            # Filtro por ID si se proporciona (útil para la Constitución)
+            # Filtro por ID si se proporciona (Constitución)
             if start_id is not None and end_id is not None:
                 try:
                     # Buscamos el ID en 'original_sentence_id' o 'id'
@@ -73,11 +73,11 @@ def compute_external_metrics(original, output, reference):
     sari_val = bleu_val = bs_val = 0.0
     if not output or not reference: return sari_val, bleu_val, bs_val
     
-    # 1. SARI (Estandardizado en src.signals)
+    # SARI 
     try: sari_val = sari(original, output, [reference])
     except: pass
     
-    # 2. BLEU (Normalizado 0-1)
+    # BLEU 
     try:
         from sacrebleu.metrics import BLEU
         bleu_val = BLEU(effective_order=True).sentence_score(output, [reference]).score / 100
@@ -87,7 +87,7 @@ def compute_external_metrics(original, output, reference):
             bleu_val = evaluate.load('bleu').compute(predictions=[output], references=[reference])['bleu']
         except: pass
         
-    # 3. BERTScore (Normalizado 0-1)
+    # BERTScore
     try:
         P, R, F1 = bert_score_func([output], [reference], model_type='bert-base-multilingual-cased', lang='es')
         bs_val = F1.mean().item()
@@ -215,7 +215,7 @@ def run_evaluation(args):
             self.terminal = sys.stdout
             self.log = open(filename, "a", encoding="utf-8")
         def write(self, message):
-            # Escribir a terminal manejando errores de codificación (común en Windows con emojis)
+     
             try:
                 self.terminal.write(message)
             except UnicodeEncodeError:
