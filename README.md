@@ -55,13 +55,17 @@ The submitted systems used the following models:
 
   Official model: [RigoChat-7B-v2](https://huggingface.co/IIC/RigoChat-7b-v2)  
 
+---
+
 ## 🧩 Frameworks
 
 **LangGraph**
-Used to implement the governed multi-agent workflow, including stateful execution, specialised nodes, conditional routing, retry loops and traceable decisions.
 
-Official framework: [LangGraph](https://www.langchain.com/langgraph)
+- Used to implement the governed multi-agent workflow, including stateful execution, specialised nodes, conditional routing, retry loops and traceable decisions.
 
+  Official framework: [LangGraph](https://www.langchain.com/langgraph)
+
+---
 
 📁 Repository Contents
 
@@ -75,6 +79,8 @@ The repository includes:
 - multi-agent workflow components.
 - baseline generation scripts.
 - internal evaluation and validation utilities.
+
+---
 
 ## 📖 Citation
 
