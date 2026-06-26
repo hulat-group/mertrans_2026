@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 import os
 import time
 import sys
@@ -19,7 +18,6 @@ from langchain_community.llms import LlamaCpp
 from langchain_google_genai import ChatGoogleGenerativeAI
 import transformers
 
-# Silenciar warnings técnicos
 os.environ['HF_HUB_DISABLE_SYMLINKS_WARNING'] = '1'
 logging.getLogger('transformers').setLevel(logging.ERROR)
 logging.getLogger('huggingface_hub').setLevel(logging.ERROR)
@@ -82,7 +80,7 @@ def create_zip(team_name):
         for root, dirs, files in os.walk(team_name):
             for file in files:
                 filepath = os.path.join(root, file)
-                # La carpeta de idioma (ES) queda en la raíz del ZIP
+
                 arcname = os.path.relpath(filepath, team_name)
                 z.write(filepath, arcname)
     print(f"[OK] ZIP creado: {zip_filename}")
@@ -98,7 +96,7 @@ def merge_csv_progress(main_file, secondary_file):
         with open(secondary_file, 'r', encoding='utf-8') as f_in, \
              open(main_file, 'a', encoding='utf-8', newline='') as f_out:
             reader = csv.reader(f_in)
-            next(reader, None) # Saltar cabecera
+            next(reader, None) 
             writer = csv.writer(f_out)
             for row in reader:
                 writer.writerow(row)
@@ -118,9 +116,8 @@ def main():
     parser.add_argument('--resume', action='store_true', help='Continuar desde el último punto guardado')
     args = parser.parse_args()
 
-    # Configuración automática del Agente Léxico
+    # Configuración del Agente Léxico
     if args.lexical == 'auto':
-        # Si es RUN1 (o similar), desactivamos por defecto. Para otros, activamos.
         is_run1 = "RUN1" in args.run.upper()
         os.environ["DISABLE_LEXICAL_AGENT"] = "true" if is_run1 else "false"
     else:
@@ -162,14 +159,14 @@ def main():
     print(f"[START] INICIANDO PROCESAMIENTO: {len(test_data)} instancias")
     print("="*60 + "\n")
 
-    # 4. Resume logic (Mejorado con conteo preventivo y persistencia)
+    # Resume logic
     processed_ids = set()
     resume_mode = args.resume
     
     progress_exists = os.path.exists(temp_file) or os.path.exists(out_file)
 
     if progress_exists:
-        # Contar filas existentes para informar al usuario antes de preguntar
+        # Contar filas existentes
         count = 0
         file_to_check = temp_file if os.path.exists(temp_file) else out_file
         try:
@@ -207,7 +204,7 @@ def main():
                     processed_ids.add((row['document_id'], row['original_sentence_id']))
             print(f"[RETRY] Modo REANUDAR activo: {len(processed_ids)} ejemplo{'s' if len(processed_ids) != 1 else ''} ya cargado{'s' if len(processed_ids) != 1 else ''}.")
 
-    # 5. Bucle de procesamiento
+    # Bucle de procesamiento
     fieldnames_official = ['document_id', 'original_sentence_id', 'system']
     fieldnames_detailed = [
         'id', 'original', 'output', 'strategy', 'decision', 
@@ -278,11 +275,10 @@ def main():
             
             gc.collect()
 
-    # 6. Finalizar
+    # Finalizar
     os.rename(temp_file, out_file)
     os.rename(detailed_temp, detailed_file)
     
-    # Calcular duración total acumulada
     total_segundos = 0
     try:
         with open(detailed_file, 'r', encoding='utf-8') as f:
