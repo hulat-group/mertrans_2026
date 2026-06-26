@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 import os
 import sys
 import contextlib
@@ -31,16 +30,15 @@ if PROJECT_ROOT not in sys.path:
 from src.graph import setup_system, run_simplification
 from src.signals import normalize_signals, sari, fernandez_huerta
 
-
 def compute_external_metrics(original, output, reference):
     sari_val = bleu_val = bs_val = 0.0
     if not output or not reference: return sari_val, bleu_val, bs_val
     
-    # 1. SARI (Estandardizado en src.signals)
+    # SARI 
     try: sari_val = sari(original, output, [reference])
     except: pass
     
-    # 2. BLEU (Normalizado 0-1)
+    # BLEU 
     try:
         from sacrebleu.metrics import BLEU
         bleu_val = BLEU(effective_order=True).sentence_score(output, [reference]).score / 100
@@ -50,7 +48,7 @@ def compute_external_metrics(original, output, reference):
             bleu_val = evaluate.load('bleu').compute(predictions=[output], references=[reference])['bleu']
         except: pass
         
-    # 3. BERTScore (Normalizado 0-1)
+    # BERTScore 
     try:
         P, R, F1 = bert_score_func([output], [reference], model_type='bert-base-multilingual-cased', lang='es')
         bs_val = F1.mean().item()
@@ -63,7 +61,7 @@ def main():
     parser.add_argument('--input', type=str, required=True, help='Archivo .txt con el formato *Texto a simplificar: ...')
     args = parser.parse_args()
 
-    # 1. Parsear archivo con asteriscos
+    # Parsear archivo con asteriscos
     original_text = ""
     reference_text = None
     
@@ -84,7 +82,7 @@ def main():
         print("[FAIL] Error: No se ha encontrado el marcador '*Texto a simplificar:' en el archivo.")
         return
 
-    # 2. Inicializar sistema
+    # Inicializar sistema
     load_dotenv()
     api_key = os.getenv("GOOGLE_API_KEY")
     if not api_key:
@@ -128,24 +126,24 @@ def main():
     app, glossary, lexical_resources = setup_system(gemini_llm, rigochat_llm)
     bleu_scorer = evaluate.load('bleu')
 
-    # 3. Procesamiento
+    # Procesamiento
     print("[BRAIN] Propagando texto a través del pipeline multi-agente...")
     state = run_simplification(app, glossary, lexical_resources, gemini_llm, original_text, reference_text if reference_text else "")
     output = state.get('final_output', '')
     meaningbert = state.get('final_meaningbert', 0.0)
 
-    # 4. Métricas y Normalización
+    # Métricas y Normalización
     print("[METRIC] Calculando métricas de calidad y normalizando puntuaciones...")
     raw_signals = state.get('final_signals', {})
     norm = normalize_signals(raw_signals)
     
-    # Legibilidad estandarizada (0-1)
+    # Legibilidad estandarizada
     legibilidad_norm = fernandez_huerta(output) if output else 0.0
     
     # Métricas externas
     sari_val, bleu, bs_cur = compute_external_metrics(original_text, output, reference_text if reference_text else "")
 
-    # 5. Salida en .txt
+    # Salida en .txt
     out_file = "resultado_simplificacion.txt"
     with open(out_file, 'w', encoding='utf-8') as f:
         f.write("="*75 + "\n")
@@ -179,7 +177,7 @@ def main():
 
     print(f"\nOK ¡Éxito! Informe detallado generado en '{out_file}'\n")
 
-    # 6. Salida de Traza al estilo run_parallel
+    # Salida de Traza al estilo run_parallel
     trace_file = "traza_simplificacion.txt"
     with open(trace_file, 'w', encoding='utf-8') as f:
         f.write(f"{'='*70}\nID: Individual\nORIGINAL: {original_text}\n\n")
