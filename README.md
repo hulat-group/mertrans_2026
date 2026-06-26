@@ -74,7 +74,6 @@ This repository contains the implementation associated with the HULAT2-UC3M MER-
 The repository includes:
 
 - source code for the submitted systems.
-- prompt templates.
 - run configuration files.
 - multi-agent workflow components.
 - baseline generation scripts.
