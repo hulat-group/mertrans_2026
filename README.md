@@ -79,23 +79,16 @@ The repository includes:
 ---
 
 ## 📖 Citation
-
-For citing the GitHub repository:
-
 For citing the conference paper:
 
-@inproceedings{moreno2026hulat2,
-  author    = {Moreno, Lourdes and Mart{\'\i}nez, Paloma and Domínguez-Gómez, Miguel and Sanchez-Escudero, Marco Antonio},
-  title     = {{HULAT2 at MER-TRANS 2026: Governed Multi-Agent Simplification for Spanish Easy-to-Read Generation}},
-  booktitle = {Proceedings of the Iberian Languages Evaluation Forum (IberLEF 2026)},
-  series    = {CEUR Workshop Proceedings},
-  volumen   = {},
-  year      = {2026},
-  address   = {León, Spain},
-  publisher = {CEUR-WS.org},
-  url       = {https://ceur-ws.org/}
-}
+Lourdes Moreno, Paloma Martínez, Miguel Domínguez-Gómez, and Marco Antonio Sanchez-Escudero. HULAT2 at MER-TRANS 2026: Governed Multi-Agent Simplification for Spanish Easy-to-Read Generation. In Proceedings of the Iberian Languages Evaluation Forum (IberLEF 2026), CEUR Workshop Proceedings, León, Spain, September 2026. To appear.
 
+
+For zenodo reference:
+
+Moreno, L., & Martínez, P. (2026). AIGov-Access: AI Governance for Accessibility-Oriented Text Adaptation - MER-TRANS 2026 Profile (v0.1.0). Zenodo. https://doi.org/10.5281/zenodo.20855013
+
+> Note: See [`CITATION.bib`](CITATION.bib), or use the DOI.
 ---
 
 ## Funding
