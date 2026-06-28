@@ -82,9 +82,19 @@ The repository includes:
 
 For citing the GitHub repository:
 
-
 For citing the conference paper:
 
+@inproceedings{moreno2026hulat2,
+  author    = {Moreno, Lourdes and Mart{\'\i}nez, Paloma and Domínguez-Gómez, Miguel and Sanchez-Escudero, Marco Antonio},
+  title     = {{HULAT2 at MER-TRANS 2026: Governed Multi-Agent Simplification for Spanish Easy-to-Read Generation}},
+  booktitle = {Proceedings of the Iberian Languages Evaluation Forum (IberLEF 2026)},
+  series    = {CEUR Workshop Proceedings},
+  volumen   = {},
+  year      = {2026},
+  address   = {León, Spain},
+  publisher = {CEUR-WS.org},
+  url       = {https://ceur-ws.org/}
+}
 
 ---
 
